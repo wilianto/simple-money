@@ -1,0 +1,32 @@
+doctype html
+html
+  head
+    title Bitcoin
+    = csrf_meta_tags
+
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+
+  body
+    .container
+      .row
+        .col-md-12
+          = render partial: "layouts/session"
+    .row
+      .col-md-3.col-md-offset-1
+        .menu-header Menu
+        .list-group
+          - current_path = request.path
+          = link_to "Dashboard", dashboard_path,
+                    class: menu_class(dashboard_path, current_path)
+          = link_to "Logout", logout_path,
+              data: { remote: true, method: :delete }, class: "list-group-item"
+
+      .col-md-7
+        .welcome-header = "Welcome, #{current_user.name}"
+        .panel.panel-default
+          .panel-heading
+            = yield :panel_header
+          .panel-body
+            = yield
+
